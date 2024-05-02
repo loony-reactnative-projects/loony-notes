@@ -10,33 +10,48 @@ import {
 } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
-// const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator();
 
-// const DrawerContent = props => {
-//   return (
-//     <>
-//       <ScrollView>
-//         <SafeAreaView
-//           style={{flex: 1}}
-//           forceInset={{top: 'always', horizontal: 'never'}}>
-//           <Text
-//             style={{
-//               marginBottom: 10,
-//               paddingVertical: 10,
-//               paddingTop: 25,
-//               paddingLeft: 20,
-//               fontSize: 20,
-//               borderBottomWidth: 1,
-//               borderBottomColor: '#eee',
-//             }}>
-//             Notes App
-//           </Text>
-//           <DrawerItemList {...props} />
-//         </SafeAreaView>
-//       </ScrollView>
-//     </>
-//   );
-// };
+const DrawerContent = props => {
+  return (
+    <>
+      <ScrollView>
+        <SafeAreaView
+          style={{flex: 1}}
+          forceInset={{top: 'always', horizontal: 'never'}}>
+          <Text
+            style={{
+              marginBottom: 10,
+              paddingVertical: 10,
+              paddingTop: 25,
+              paddingLeft: 20,
+              fontSize: 20,
+              borderBottomWidth: 1,
+              borderBottomColor: '#eee',
+            }}>
+            Notes App
+          </Text>
+          <DrawerItemList {...props} />
+        </SafeAreaView>
+      </ScrollView>
+    </>
+  );
+};
+
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator drawerContent={DrawerContent}>
+      <Drawer.Screen
+        name="Home"
+        component={screens.Home}
+        options={{headerShown: false}}
+      />
+      <Drawer.Screen name="Labels" component={screens.LabelsManager} />
+      <Drawer.Screen name="Folders" component={screens.Folders} />
+      <Drawer.Screen name="Trash" component={screens.Trash} />
+    </Drawer.Navigator>
+  );
+};
 
 const AppNavigator = ({navRef}) => {
   return (
@@ -45,22 +60,11 @@ const AppNavigator = ({navRef}) => {
         screenOptions={{
           cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid,
         }}>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Menus"
           options={{headerShown: false}}
-          component={() => (
-            <Drawer.Navigator drawerContent={DrawerContent}>
-              <Drawer.Screen
-                name="Home"
-                component={screens.Home}
-                options={{headerShown: false}}
-              />
-              <Drawer.Screen name="Labels" component={screens.LabelsManager} />
-              <Drawer.Screen name="Folders" component={screens.Folders} />
-              <Drawer.Screen name="Trash" component={screens.Trash} />
-            </Drawer.Navigator>
-          )}
-        /> */}
+          component={DrawerNavigator}
+        />
         <Stack.Screen
           name="AddNote"
           component={screens.AddNote}
